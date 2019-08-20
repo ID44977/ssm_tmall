@@ -6,6 +6,8 @@ import cn.com.sparknet.tmall.service.CategoryService;
 import cn.com.sparknet.tmall.util.ImageUtil;
 import cn.com.sparknet.tmall.util.Page;
 import cn.com.sparknet.tmall.util.UploadedImageFile;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,7 @@ public class CategoryController {
     /*
     在list方法中，通过categoryService.list()获取所有的Category对象，然后放在"cs"中，并服务端跳转到 “admin/listCategory” 视图。
     “admin/listCategory” 会根据后续的springMVC.xml 配置文件，跳转到 WEB-INF/jsp/admin/listCategory.jsp 文件
-     */
+
     @RequestMapping("admin_category_list")//注解@RequestMapping("admin_category_list") 映射admin_category_list路径的访问
     public String list(Model model, Page page) {//为方法list增加参数Page用于获取浏览器传递过来的分页信息
         List<Category> cs = categoryService.list(page);//获取当前页的分类集合
@@ -36,6 +38,20 @@ public class CategoryController {
         page.setTotal(total);//为分页对象设置总数
         model.addAttribute("page", page);//把分页对象放在 "page“ 中
         model.addAttribute("cs", cs);//把分类集合放在"cs"中
+        return "admin/listCategory";
+    }
+     */
+    @RequestMapping("admin_category_list")
+    public String list(Model model, Page page) {
+        PageHelper.offsetPage(page.getStart(), page.getCount());
+        //通过分页插件指定分页参数
+        List<Category> cs = categoryService.list();
+        //调用list() 获取对应分页的数据
+        int total = (int) new PageInfo<>(cs).getTotal();
+        //通过PageInfo调取总数
+        page.setTotal(total);
+        model.addAttribute("cs", cs);
+        model.addAttribute("page", page);
         return "admin/listCategory";
     }
 

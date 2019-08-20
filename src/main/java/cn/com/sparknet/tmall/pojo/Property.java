@@ -1,7 +1,19 @@
 package cn.com.sparknet.tmall.pojo;
 
-public class Category {
+public class Property {
+    private Category  category;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     private Integer id;
+
+    private Integer cid;
 
     private String name;
 
@@ -11,6 +23,14 @@ public class Category {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public String getName() {
