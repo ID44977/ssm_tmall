@@ -1,8 +1,30 @@
 package cn.com.sparknet.tmall.pojo;
 
+import com.sun.corba.se.impl.interceptors.PICurrent;
+
 import java.util.Date;
 
 public class Product {
+    private Category category;
+
+    public Category getCategoryInProduct() {
+        return category;
+    }
+
+    public void setCategoryInProduct(Category category) {
+        this.category = category;
+    }
+
+    private ProductImage firstProductImage;
+
+    public ProductImage getFirstProductImage() {
+        return firstProductImage;
+    }
+
+    public void setFirstProductImage(ProductImage firstProductImage) {
+        this.firstProductImage = firstProductImage;
+    }
+
     private Integer id;
 
     private String name;

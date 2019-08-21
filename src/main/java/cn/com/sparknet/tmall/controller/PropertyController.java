@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("")
 public class PropertyController {
     @Autowired
+
     CategoryService categoryService;
     @Autowired
     PropertyService propertyService;
@@ -39,8 +40,11 @@ public class PropertyController {
     @RequestMapping("admin_property_edit")
     public String edit(Model model, int id) {
         Property p = propertyService.get(id);
+        //根据id获取Property对象放在p里
         Category c = categoryService.get(p.getCid());
+        //根据Property对象的cid属性获取Category对象
         p.setCategory(c);
+        //将该Category对象设置在Property对象的category属性上
         model.addAttribute("p", p);
         return "admin/editProperty";
     }
@@ -64,7 +68,7 @@ public class PropertyController {
         page.setTotal(total);
         //把总数设置给分页page对象
         page.setParam("&cid="+c.getId());
-
+        //取出cid放入param，待jsp页面通过param取出cid
         model.addAttribute("ps", ps);
         model.addAttribute("c", c);
         model.addAttribute("page", page);
